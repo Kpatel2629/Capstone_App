@@ -8,38 +8,36 @@
 <ion-content>
   
     
-  <ion-list inset>
+     <ion-list inset>
 
-    <ion-item>
-      <img src="../../assets/logo.png">
-    </ion-item>
+    
+    <img src="../../assets/logo.png">
+   
+    <ion-input placeholder="Username" style="font-size: 20px;color: black;" value=""></ion-input>
 
+    <ion-input placeholder="email" style="font-size: 20px;"  value = "" ></ion-input>
+     
+    <ion-input placeholder="Password"  style="font-size: 20px;" value=""></ion-input>
 
-<ion-item>
-      <ion-label style="font-size: 15px;color: black; " position="floating" >Username</ion-label>
-      <ion-input style="font-size: 15px;color: black;" value=""></ion-input>
-</ion-item>
-
-  <ion-item style="shape-outside: border-box;">
-        <ion-label   style="font-size: 15px;" position="floating" >Password</ion-label>
-        <ion-input   style="font-size: 15px;" value=""></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked">Address</ion-label>
-    <ion-input placeholder="Address Line 1"></ion-input>
-    <ion-input placeholder="Address Line 2"></ion-input>
-    <ion-input placeholder="City"></ion-input>
-    <ion-input placeholder="Province"></ion-input>
-    <ion-input placeholder="PostalCode"></ion-input>
-  </ion-item>
+    <ion-input  placeholder="Confirm Password"  style="font-size: 20px;" value=""></ion-input>
 
 
-    <ion-item>
-        <ion-label style="font-size: 15px;" position="floating" >Email</ion-label>
-        <ion-input  style="font-size: 15px;"  value = "" ></ion-input>
-     </ion-item>
+
+   
+    <ion-input  style="font-size: 20px;"placeholder="Address Line 1"></ion-input>
+    <ion-input style="font-size: 20px;" placeholder="Address Line 2"></ion-input >
+    <ion-input  style="font-size: 20px;"placeholder="City"></ion-input>
+    <ion-input style="font-size: 20px;" placeholder="Province"></ion-input>
+    <ion-input style="font-size: 20px;" placeholder="PostalCode"></ion-input>
+  
 
 </ion-list>
+ 
+<ion-button  shape="round" size="30px" color="light" >
+  <ion-icon slot="icon-only" name="log-in" ></ion-icon>Log In</ion-button>
 
+<ion-button shape="round" size="30px" color="light" >
+<ion-icon slot="icon-only" name="person" ></ion-icon> 
+
+Register</ion-button>
  </ion-content>
