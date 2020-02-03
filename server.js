@@ -1,0 +1,113 @@
+// default route
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var mysql = require('mysql');
+var cors = require('cors');
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 
+  }
+  
+  app.use(cors(corsOptions))
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+  
+  
+// connection configurations
+var dbConn = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Aa9909817814',
+    database: 'user'
+});
+  
+// connect to database
+dbConn.connect(); 
+ 
+ 
+// Retrieve all users 
+app.get('/users', function (req, res) {
+    dbConn.query('SELECT * FROM user_info', function (error, results) {
+        if (error) throw error;
+        return res.send({ data: results, message: 'users list.' });
+    });
+});
+ 
+ 
+// Retrieve user with id 
+app.get('/users/:id', function (req, res) {
+  
+    let user_id = req.params.id;
+  
+    if (!user_id) {
+        return res.status(400).send({ error: true, message: 'Please provide user_id' });
+    }
+  
+    dbConn.query('SELECT * FROM user_info where User_id=?', user_id, function (error, results) {
+        if (error) throw error;
+        return res.send({ error: false, data: results[0], message: 'users list.' });
+    });
+  
+});
+ 
+ 
+// Add a new user  
+app.post('/users', function (req, res) {
+  
+    let user = req.body.user;
+  
+    if (!user) {
+        
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+  
+    dbConn.query("INSERT INTO user_info SET ? ", { User_info: user }, function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'New user has been created successfully.' });
+    });
+});
+ 
+ 
+//  Update user with id
+app.put('/user', function (req, res) {
+  
+    let user_id = req.body.user_id;
+    let user = req.body.user;
+  
+    if (!user_id || !user) {
+        return res.status(400).send({ error: user, message: 'Please provide user and user_id' });
+    }
+  
+    dbConn.query("UPDATE users SET user = ? WHERE id = ?", [user, user_id], function (error, results) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'user has been updated successfully.' });
+    });
+});
+ 
+ 
+//  Delete user
+app.delete('/user', function (req, res) {
+  
+    let user_id = req.body.user_id;
+  
+    if (!user_id) {
+        return res.status(400).send({ error: true, message: 'Please provide user_id' });
+    }
+    dbConn.query('DELETE FROM users WHERE id = ?', [user_id], function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
+    });
+}); 
+ 
+// set port
+app.listen(3000, function () {
+    console.log('Node app is running on port 3000');
+});
+ 
+module.exports = app;
