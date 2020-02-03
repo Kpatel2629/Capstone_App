@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClientModule ,HttpClient } from '@angular/common/http';
+import { HttpClientModule ,HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { resolve } from 'url';
+
 
 @Component({
   selector: 'app-tab1',
@@ -17,7 +18,8 @@ export class Tab1Page {
 
   public logindata:any = { };
 
-  constructor(public http:Http) {
+ 
+  constructor(public http:Http  ) {
     
   }
 
@@ -32,24 +34,32 @@ export class Tab1Page {
     });
   }  
 
-   user = JSON.stringify({
+
+
+
+   users = JSON.stringify( {
       first_name : this.logindata.username,
       last_name : this.logindata.username,
-      phonenumber : "9909817814",
+      phonenumber: "9909817814",
       address : this.logindata.address
   });
 
+ 
+  
 postUsers(){
 
   return new Promise(resolve => {
-    this.http.post('http://localhost:3000'+'/users', this.user).subscribe(data => {
-      console.log(data.json().data);
+    
+    this.http.post('http://localhost:3000'+'/users',{user: this.users}).subscribe(data => {
+      console.log(data);
     }, err => {
       console.log(err);
     });
-  });
-      
+  });      
 }
+
+
+
 
   async loginClick(){
    
