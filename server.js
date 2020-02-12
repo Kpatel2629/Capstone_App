@@ -12,6 +12,11 @@ var corsOptions = {
   
   app.use(cors(corsOptions))
 
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -24,7 +29,7 @@ var dbConn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Aa9909817814',
-    database: 'user'
+    database: 'attenc'
 });
   
 // connect to database
@@ -33,13 +38,12 @@ dbConn.connect();
  
 // Retrieve all users 
 app.get('/users', function (req, res) {
-    dbConn.query('SELECT * FROM user_info', function (error, results) {
+    dbConn.query('SELECT * FROM student', function (error, results) {
         if (error) throw error;
-        return res.send({ data: results, message: 'users list.' });
+        return res.send( results);
     });
 });
- 
- 
+  
 // Retrieve user with id 
 app.get('/users/:id', function (req, res) {
   
@@ -49,30 +53,32 @@ app.get('/users/:id', function (req, res) {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConn.query('SELECT * FROM user_info where User_id=?', user_id, function (error, results) {
+    dbConn.query('SELECT * FROM student where student_id=?', user_id, function (error, results) {
         if (error) throw error;
         return res.send({ error: false, data: results[0], message: 'users list.' });
-    });
-  
+    }); 
 });
- 
  
 // Add a new user  
-app.post('/users', function (req, res) {
+app.post('/student', function (req, res) {
   
-    let user = req.body.user;
+    let user =JSON.parse( req.body.users);
+    var f_name = user.firstName;
+    var l_name  = user.lastName;
+    var username = user.userName;
+    var email = user.email;
+    
   
     if (!user) {
-        
         return res.status(400).send({ error:true, message: 'Please provide user' });
     }
-  
-    dbConn.query("INSERT INTO user_info SET ? ", { User_info: user }, function (error, results, fields) {
+
+    dbConn.query("INSERT INTO student (username,first_name,last_name,email) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"') ",
+     function (error, results, fields) {
         if (error) throw error;
-        return res.send({ error: false, data: results, message: 'New user has been created successfully.' });
+        return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        
     });
 });
- 
  
 //  Update user with id
 app.put('/user', function (req, res) {
@@ -89,8 +95,7 @@ app.put('/user', function (req, res) {
         return res.send({ error: false, data: results, message: 'user has been updated successfully.' });
     });
 });
- 
- 
+
 //  Delete user
 app.delete('/user', function (req, res) {
   

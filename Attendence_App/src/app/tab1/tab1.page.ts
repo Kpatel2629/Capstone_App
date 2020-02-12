@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClientModule ,HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
-import { resolve } from 'url';
+import { Observable, from } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { LoadingController } from '@ionic/angular';
+
 
 
 @Component({
@@ -12,15 +14,12 @@ import { resolve } from 'url';
   styleUrls: ['tab1.page.scss']
 })
 
-
-
 export class Tab1Page {
 
-  public logindata:any = { };
-
- 
-  constructor(public http:Http  ) {
-    
+  public logindata:any = {};
+  public errorMessege:string;
+  
+  constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController ) {     
   }
 
   //get all users
@@ -34,37 +33,57 @@ export class Tab1Page {
     });
   }  
 
+  //try for firestore
+  TryFirestore(data) {
+    return new Promise<any>((resolve, reject) =>{
+        this.Store
+            .collection("Classes/").doc("class_id/").set(data)
+            .then(res => {}, err => reject(err));
+    });
+  }
 
-
-
-   users = JSON.stringify( {
-      first_name : this.logindata.username,
-      last_name : this.logindata.username,
-      phonenumber: "9909817814",
-      address : this.logindata.address
-  });
-
- 
-  
-postUsers(){
-
-  return new Promise(resolve => {
     
-    this.http.post('http://localhost:3000'+'/users',{user: this.users}).subscribe(data => {
-      console.log(data);
+//ionic Loading
+  async presentLoading() {
+  const loading = await this.loadingController.create({
+    message: 'Loading....',
+    duration:1500
+  });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  //A function that return promise which insert a new student or instructor into database
+  postUsers(person){
+  return new Promise(resolve => {
+    this.http.post('http://localhost:3000'+'/student',{users: person}).subscribe(data => {
+      this.errorMessege = JSON.stringify(data.json().message);
     }, err => {
       console.log(err);
     });
-  });      
-}
+   });      
+  }
 
 
 
+  //A value that to be fetched to firestore
+  k = { barcode_id : "Value of barcode"};
 
-  async loginClick(){
+  async registerClick(){
    
-    this.postUsers();
-  
+    //A user Object
+    let k =JSON.stringify({
+      firstName : this.logindata.firstName,
+      lastName: this.logindata.lastName,
+      userName:this.logindata.userName,
+      email:this.logindata.email,
+      password: this.logindata.password,
+      IsInstructor:this.logindata.IsInstructor
+    });
 
+   // this.presentLoading();
+   this.postUsers(k);
+  //this.TryFirestore(this.k);
   }
   }

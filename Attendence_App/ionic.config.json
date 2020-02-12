@@ -1,5 +1,8 @@
 {
   "name": "Attendence_App",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
   "type": "angular"
 }

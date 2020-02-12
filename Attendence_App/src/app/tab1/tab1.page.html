@@ -1,19 +1,22 @@
 <ion-header translucent  >
+ 
     <ion-toolbar >
-      <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">My Attendence</ion-title>
+      <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">      My Attendence</ion-title>
     </ion-toolbar>
   </ion-header>
 
 
 <ion-content>
-  
-    
-     <ion-list inset>
 
-    
+   <ion-list inset>
+
     <img src="../../assets/logo.png">
+    
+    <ion-input  [(ngModel)]="logindata.firstName" type = "text" style="font-size: 20px;" placeholder="First Name"></ion-input >
+
+    <ion-input  [(ngModel)]="logindata.lastName" type = "text" style="font-size: 20px;"placeholder="Last Name"></ion-input>
    
-    <ion-input  [(ngModel)]="logindata.username" type = "text" placeholder="Username" style="font-size: 20px;color: black;" value=""></ion-input>
+    <ion-input  [(ngModel)]="logindata.userName" type = "text" placeholder="Username" style="font-size: 20px;color: black;" value=""></ion-input>
 
     <ion-input  [(ngModel)]="logindata.email" type = "text" placeholder="email" style="font-size: 20px;"  value = "" ></ion-input>
      
@@ -21,23 +24,16 @@
 
     <ion-input  [(ngModel)]="logindata.C_password" type = "text" placeholder="Confirm Password"  style="font-size: 20px;" value=""></ion-input>
 
-
-
-   
-    
-    <ion-input  [(ngModel)]="logindata.address" type = "text" style="font-size: 20px;" placeholder="Address"></ion-input >
-    <ion-input  [(ngModel)]="logindata.city" type = "text" style="font-size: 20px;"placeholder="City"></ion-input>
-    <ion-input  [(ngModel)]="logindata.province" type = "text" style="font-size: 20px;" placeholder="Province"></ion-input>
-    <ion-input  [(ngModel)]="logindata.postalCode" type = "text" style="font-size: 20px;" placeholder="PostalCode"></ion-input>  
+    <ion-item style="right: 9px;">
+      <ion-label style="font-size: 20px;">SignUp as Instructor</ion-label>
+      <ion-checkbox style="font-size: 20px;" color="light"  [(ngModel)]="logindata.IsInstructor"></ion-checkbox>
+    </ion-item>
   
-
 </ion-list>
- 
-<ion-button (click)="loginClick()"  shape="round" size="30px" color="light" >
-  <ion-icon slot="icon-only" name="log-in" ></ion-icon>Log In</ion-button>
 
-<ion-button shape="round" size="30px" color="light" >
-<ion-icon slot="icon-only" name="person" ></ion-icon> 
+<ion-input readonly="" style="font-size: 20px; color: red;" [(ngModel)]="errorMessege"  ></ion-input>
 
-Register</ion-button>
- </ion-content>
+<ion-button  (click)="registerClick()" style="left: 100px; right: 100px;" shape="round" size="30px" color="light" >
+<ion-icon slot="icon-only" name="person" ></ion-icon>Register</ion-button>
+  
+</ion-content>
