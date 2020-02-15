@@ -35,7 +35,6 @@ var dbConn = mysql.createConnection({
 // connect to database
 dbConn.connect(); 
  
- 
 // Retrieve all users 
 app.get('/users', function (req, res) {
     dbConn.query('SELECT * FROM student', function (error, results) {
@@ -67,13 +66,14 @@ app.post('/student', function (req, res) {
     var l_name  = user.lastName;
     var username = user.userName;
     var email = user.email;
+    var password = user.password;
     
   
     if (!user) {
         return res.status(400).send({ error:true, message: 'Please provide user' });
     }
 
-    dbConn.query("INSERT INTO student (username,first_name,last_name,email) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"') ",
+    dbConn.query("INSERT INTO student (username,first_name,last_name,email,password) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"','"+password+"') ",
      function (error, results, fields) {
         if (error) throw error;
         return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        

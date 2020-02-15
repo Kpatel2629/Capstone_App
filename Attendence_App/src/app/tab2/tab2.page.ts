@@ -5,7 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
+
+
+
 export class Tab2Page {
+  
+  public userName:string;
+  public password:any;
 
   constructor() {}
 

@@ -33,7 +33,12 @@
 
 <ion-input readonly="" style="font-size: 20px; color: red;" [(ngModel)]="errorMessege"  ></ion-input>
 
-<ion-button  (click)="registerClick()" style="left: 100px; right: 100px;" shape="round" size="30px" color="light" >
-<ion-icon slot="icon-only" name="person" ></ion-icon>Register</ion-button>
+<ion-row>
+  <ion-col col-12 col-sm><ion-button  (click)="registerClick()" style="margin-left: 30px;" shape="round" size="30px" color="light" >
+    <ion-icon slot="icon-only" name="person" ></ion-icon>Register</ion-button></ion-col>
+  <ion-col col-12 col-sm><ion-button  (click)="ToLoginClick()" shape="round" size="30px" color="light" >
+    <ion-icon slot="end" name="arrow-round-forward" ></ion-icon>To Login </ion-button>
+    </ion-col>
+</ion-row>
   
 </ion-content>

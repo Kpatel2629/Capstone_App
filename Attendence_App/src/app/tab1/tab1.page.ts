@@ -8,6 +8,7 @@ import { LoadingController } from '@ionic/angular';
 
 
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -19,7 +20,10 @@ export class Tab1Page {
   public logindata:any = {};
   public errorMessege:string;
   
-  constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController ) {     
+  constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController,
+  public router:Router ) 
+  {
+
   }
 
   //get all users
@@ -65,13 +69,14 @@ export class Tab1Page {
    });      
   }
 
-
-
   //A value that to be fetched to firestore
   k = { barcode_id : "Value of barcode"};
 
+  async ToLoginClick(){
+    this.router.navigate(['/tabs/tab2'])
+  }
+
   async registerClick(){
-   
     //A user Object
     let k =JSON.stringify({
       firstName : this.logindata.firstName,
