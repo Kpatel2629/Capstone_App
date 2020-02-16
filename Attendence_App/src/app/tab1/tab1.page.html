@@ -20,9 +20,9 @@
 
     <ion-input  [(ngModel)]="logindata.email" type = "text" placeholder="email" style="font-size: 20px;"  value = "" ></ion-input>
      
-    <ion-input  [(ngModel)]="logindata.password" type = "text" placeholder="Password"  style="font-size: 20px;" value=""></ion-input>
+    <ion-input  [(ngModel)]="logindata.password" type = "password" placeholder="Password"  style="font-size: 20px;" value=""></ion-input>
 
-    <ion-input  [(ngModel)]="logindata.C_password" type = "text" placeholder="Confirm Password"  style="font-size: 20px;" value=""></ion-input>
+    <ion-input  [(ngModel)]="logindata.C_password" type = "password" placeholder="Confirm Password"  style="font-size: 20px;" value=""></ion-input>
 
     <ion-item style="right: 9px;">
       <ion-label style="font-size: 20px;">SignUp as Instructor</ion-label>
@@ -33,12 +33,15 @@
 
 <ion-input readonly="" style="font-size: 20px; color: red;" [(ngModel)]="errorMessege"  ></ion-input>
 
-<ion-row>
-  <ion-col col-12 col-sm><ion-button  (click)="registerClick()" style="margin-left: 30px;" shape="round" size="30px" color="light" >
+<ion-row style="margin-bottom: 15px;margin-top: -30px;">
+
+  <ion-col col-12 col-sm ><ion-button  (click)="registerClick()" style="margin-left: 10px;margin-bottom: 20px;" shape="round" size="30px" color="light" >
     <ion-icon slot="icon-only" name="person" ></ion-icon>Register</ion-button></ion-col>
+
   <ion-col col-12 col-sm><ion-button  (click)="ToLoginClick()" shape="round" size="30px" color="light" >
     <ion-icon slot="end" name="arrow-round-forward" ></ion-icon>To Login </ion-button>
     </ion-col>
+
 </ion-row>
   
 </ion-content>

@@ -7,8 +7,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController } from '@ionic/angular';
 
 
-
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -25,7 +23,6 @@ export class Tab1Page {
   {
 
   }
-
   //get all users
   getUsers() {
     return new Promise(resolve => {
@@ -39,14 +36,13 @@ export class Tab1Page {
 
   //try for firestore
   TryFirestore(data) {
-    return new Promise<any>((resolve, reject) =>{
+    return new Promise<any>((resolve, reject) => {
         this.Store
             .collection("Classes/").doc("class_id/").set(data)
             .then(res => {}, err => reject(err));
     });
   }
 
-    
 //ionic Loading
   async presentLoading() {
   const loading = await this.loadingController.create({
@@ -78,7 +74,7 @@ export class Tab1Page {
 
   async registerClick(){
     //A user Object
-    let k =JSON.stringify({
+    let userObject =JSON.stringify({
       firstName : this.logindata.firstName,
       lastName: this.logindata.lastName,
       userName:this.logindata.userName,
@@ -88,7 +84,7 @@ export class Tab1Page {
     });
 
    // this.presentLoading();
-   this.postUsers(k);
+   this.postUsers(userObject);
   //this.TryFirestore(this.k);
   }
   }

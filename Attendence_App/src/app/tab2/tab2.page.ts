@@ -15,4 +15,14 @@ export class Tab2Page {
 
   constructor() {}
 
+
+  ToRegisterClick(){
+    console.log("i am working , come on men")
+  }
+
+  loginClick(){
+     console.log("login working")
+  }
+
+
 }

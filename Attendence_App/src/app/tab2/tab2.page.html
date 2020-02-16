@@ -5,16 +5,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-list inset>
 
+  <ion-list inset>
     <img src="../../assets/logo.png">
     <ion-input  [(ngModel)]="userName" type = "text" style="font-size: 20px;" placeholder="First Name"></ion-input >
     <ion-input  [(ngModel)]="password" type = "text" style="font-size: 20px;"placeholder="Last Name"></ion-input>
-
   </ion-list>
-  <ion-button (click)="loginClick()"  shape="round" size="30px" color="light" >
-  <ion-icon slot="icon-only" name="log-in" ></ion-icon>Log In</ion-button>
 
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="loginClick()"  shape="round" size="30px" color="light" >
+      <ion-icon slot="icon-only" name="log-in" ></ion-icon>Log In</ion-button>      
+    </ion-col>
 
+    <ion-col>
+      <ion-button (click)="ToRegisterClick()"  shape="round" size="30px" color="light" >
+        <ion-icon slot="icon-only" name="arrow-round-forward" ></ion-icon>To Register</ion-button>      
+    </ion-col>
+  </ion-row>
  
 </ion-content>
