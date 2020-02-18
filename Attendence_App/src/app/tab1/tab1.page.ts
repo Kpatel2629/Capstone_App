@@ -15,6 +15,7 @@ import { LoadingController } from '@ionic/angular';
 
 export class Tab1Page {
 
+  //Properties
   public logindata:any = {};
   public errorMessege:string;
   
@@ -83,8 +84,8 @@ export class Tab1Page {
       IsInstructor:this.logindata.IsInstructor
     });
 
-   // this.presentLoading();
-   this.postUsers(userObject);
-  //this.TryFirestore(this.k);
+   //this.presentLoading();
+ //  this.postUsers(userObject);
+  this.TryFirestore(this.k);
   }
   }

@@ -44,15 +44,15 @@ app.get('/users', function (req, res) {
 });
   
 // Retrieve user with id 
-app.get('/users/:id', function (req, res) {
+app.get('/students/:userName', function (req, res) {
   
-    let user_id = req.params.id;
+    let UserName = req.params.userName;
   
-    if (!user_id) {
+    if (!UserName) {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
   
-    dbConn.query('SELECT * FROM student where student_id=?', user_id, function (error, results) {
+    dbConn.query('SELECT * FROM student where username=?', UserName, function (error, results) {
         if (error) throw error;
         return res.send({ error: false, data: results[0], message: 'users list.' });
     }); 

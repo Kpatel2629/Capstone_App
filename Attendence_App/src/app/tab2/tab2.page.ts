@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-tab2',
@@ -13,16 +15,26 @@ export class Tab2Page {
   public userName:string;
   public password:any;
 
-  constructor() {}
-
+  constructor(public router:Router,public http:Http ) {}
 
   ToRegisterClick(){
-    console.log("i am working , come on men")
+    this.router.navigate(['/tabs/tab1'])
   }
 
-  loginClick(){
-     console.log("login working")
+  checkUser(userName){
+    //the code of checking if username exist or not
+    return new Promise<any>((resolve,reject) => {
+      this.http.get('http://localhost:3000'+'/students/'+ userName).subscribe(data => {
+        resolve(data.json().data)
+      }, err => {
+        console.log(err);
+      });
+    });
   }
 
-
+  loginClick(){ 
+    this.checkUser(this.userName).then((value) => {
+      console.log(value);
+    });
+  }
 }
