@@ -18,6 +18,7 @@ export class Tab1Page {
   //Properties
   public logindata:any = {};
   public errorMessege:string;
+  public IsInstructor:Boolean ;
   
   constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController,
   public router:Router ) 
@@ -56,15 +57,25 @@ export class Tab1Page {
   }
 
   //A function that return promise which insert a new student or instructor into database
-  postUsers(person){
+  registerStudent(student){
   return new Promise(resolve => {
-    this.http.post('http://localhost:3000'+'/student',{users: person}).subscribe(data => {
+    this.http.post('http://localhost:3000'+'/student',{users: student}).subscribe(data => {
       this.errorMessege = JSON.stringify(data.json().message);
     }, err => {
       console.log(err);
     });
    });      
   }
+
+registerInstructor(instructor){
+  return new Promise(resolve => {
+    this.http.post('http://localhost:3000'+'/instructor',{users: instructor}).subscribe(data => {
+      this.errorMessege = JSON.stringify(data.json().message);
+    }, err => {
+      console.log(err);
+    });
+   });  
+}
 
   //A value that to be fetched to firestore
   k = { barcode_id : "Value of barcode"};
@@ -73,7 +84,9 @@ export class Tab1Page {
     this.router.navigate(['/tabs/tab2'])
   }
 
-  async registerClick(){
+  // a function which decide a user is instructor or student and return a promise
+  
+  public IsInRole(IsInstructor) {
     //A user Object
     let userObject =JSON.stringify({
       firstName : this.logindata.firstName,
@@ -81,11 +94,16 @@ export class Tab1Page {
       userName:this.logindata.userName,
       email:this.logindata.email,
       password: this.logindata.password,
-      IsInstructor:this.logindata.IsInstructor
     });
 
+    return IsInstructor ? this.registerInstructor(userObject) : this.registerStudent(userObject);
+  }
+    
+  async registerClick(){
+    
    //this.presentLoading();
- //  this.postUsers(userObject);
-  this.TryFirestore(this.k);
+ // this.TryFirestore(this.k);
+  this.IsInRole(this.IsInstructor);
+  console.log(this.IsInstructor)
   }
-  }
+}

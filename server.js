@@ -44,10 +44,10 @@ app.get('/users', function (req, res) {
 });
   
 // Retrieve user with id 
-app.get('/students/:userName', function (req, res) {
+/* app.get('/students/:userName', function (req, res) {
   
     let UserName = req.params.userName;
-  
+    
     if (!UserName) {
         return res.status(400).send({ error: true, message: 'Please provide user_id' });
     }
@@ -56,7 +56,49 @@ app.get('/students/:userName', function (req, res) {
         if (error) throw error;
         return res.send({ error: false, data: results[0], message: 'users list.' });
     }); 
+}); */
+
+
+//check if userName and password exist for login purpose
+app.post('/Checkstudent', function (req, res) {
+  
+    let user = JSON.parse(req.body.userObject);
+    var username = user.userName;
+    var password = user.password;
+    
+  
+    if (!user) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+    var sql = 'SELECT * FROM student WHERE username = ? AND password = ?';
+    dbConn.query(sql,[username,password],
+     function (error, results) {
+        if (error) throw error;
+        return res.send({ error: false, data: results[0], message: 'Account exists.'});        
+    });
 });
+
+
+// for the Instructors
+app.post('/Checkinstructor', function (req, res) {
+  
+    let user = JSON.parse(req.body.userObject);
+    var username = user.userName;
+    var password = user.password;
+    
+  
+    if (!user) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+    var sql = 'SELECT * FROM instructor WHERE username = ? AND password = ?';
+    dbConn.query(sql,[username,password],
+     function (error, results) {
+        if (error) throw error;
+        return res.send({ error: false, data: results[0], message: 'Account exists.'});        
+    });
+});
+ 
+
  
 // Add a new user  
 app.post('/student', function (req, res) {
@@ -74,6 +116,47 @@ app.post('/student', function (req, res) {
     }
 
     dbConn.query("INSERT INTO student (username,first_name,last_name,email,password) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"','"+password+"') ",
+     function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        
+    });
+});
+
+//To add a new class 
+app.post('/class', function (req, res) {
+  
+    let classes = req.body.classes;
+    var className = classes.className;
+    var instructor = classes.Instructor;
+    
+    if (!classes) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+
+    dbConn.query("INSERT INTO class (class_name,instructor_id) VALUES ( '"+className+"','"+instructor+"') ",
+     function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: ' A Class has been added.'  });        
+    });
+});
+
+
+//Add a New Instructor to database
+app.post('/instructor', function (req, res) {
+  
+    let user =JSON.parse( req.body.users);
+    var f_name = user.firstName;
+    var l_name  = user.lastName;
+    var username = user.userName;
+    var email = user.email;
+    var password = user.password;
+    
+  
+    if (!user) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+
+    dbConn.query("INSERT INTO instructor (username,first_name,last_name,email,password) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"','"+password+"') ",
      function (error, results, fields) {
         if (error) throw error;
         return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        

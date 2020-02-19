@@ -16,7 +16,7 @@ import { from } from 'rxjs';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-
+import { IonicStorageModule } from '@ionic/storage';
 
 
 
@@ -25,7 +25,7 @@ import { environment } from '../environments/environment';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpModule,HttpClientModule, AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule],
+    AngularFirestoreModule, IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,

@@ -10,6 +10,11 @@
     <img src="../../assets/logo.png">
     <ion-input  [(ngModel)]="userName" type = "text" style="font-size: 20px;" placeholder="userName"></ion-input >
     <ion-input  [(ngModel)]="password" type = "text" style="font-size: 20px;"placeholder="Password"></ion-input>
+
+    <ion-item style="right: 9px;">
+      <ion-label style="font-size: 20px;">Are you Instructer ?</ion-label>
+      <ion-checkbox style="font-size: 20px;" color="light"  [(ngModel)]="IsInstructor"></ion-checkbox>
+    </ion-item>
   </ion-list>
 
   <ion-row>
