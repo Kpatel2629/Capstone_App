@@ -58,6 +58,20 @@ app.get('/users', function (req, res) {
     }); 
 }); */
 
+//Get the all classes assigned to specific Instructor
+app.get('/getClasses/:instructorid', function(req,res){
+    
+    var instructorid = req.params.instructorid;
+    
+    if (!instructorid) {
+        return res.status(400).send({ error: true, message: 'Please provide Instructor_id' });
+    }
+    
+    dbConn.query('SELECT * FROM class where instructor_id=?', instructorid,function (error, results) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'users list.' });
+    }); 
+});
 
 //check if userName and password exist for login purpose
 app.post('/Checkstudent', function (req, res) {

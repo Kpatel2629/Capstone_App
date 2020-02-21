@@ -7,26 +7,43 @@
 <ion-content>
 
   <ion-list inset>
+
     <img src="../../assets/logo.png">
-    <ion-input  [(ngModel)]="userName" type = "text" style="font-size: 20px;" placeholder="userName"></ion-input >
-    <ion-input  [(ngModel)]="password" type = "text" style="font-size: 20px;"placeholder="Password"></ion-input>
+   
+    
+    <div class="segment">
+      <h1 style="color: darkgreen;">Log in</h1>
+    </div>
+
+  <div class="form">
+
+    <label>
+      <input type="text" style="color: black;"  [(ngModel)]="userName"  placeholder="Username"/>
+    </label>
+
+    <label>
+      <input type="password"  style="color: black;" [(ngModel)]="password" placeholder="Password"/>
+    </label>
 
     <ion-item style="right: 9px;">
       <ion-label style="font-size: 20px;">Are you Instructer ?</ion-label>
       <ion-checkbox style="font-size: 20px;" color="light"  [(ngModel)]="IsInstructor"></ion-checkbox>
     </ion-item>
-  </ion-list>
 
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="loginClick()"  shape="round" size="30px" color="light" >
-      <ion-icon slot="icon-only" name="log-in" ></ion-icon>Log In</ion-button>      
+  
+
+   <ion-row>
+     <ion-col>
+      <button class="red" (click)="loginClick()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only" name="person-add">
+      </ion-icon> Log in</button>
     </ion-col>
 
     <ion-col>
-      <ion-button (click)="ToRegisterClick()"  shape="round" size="30px" color="light" >
-        <ion-icon slot="icon-only" name="arrow-round-forward" ></ion-icon>To Register</ion-button>      
-    </ion-col>
+      <button class="red" (click)="ToRegisterClick()" style=" margin-top: 10px;"  type="button">
+      To register</button>
+  </ion-col>
   </ion-row>
- 
+
+</div>
+  </ion-list>
 </ion-content>

@@ -45,6 +45,7 @@ export class Tab2Page {
     });
   }
   
+  //A function which decide which Promise to return
   public IsInRole(IsInstructor) {
     //A user Object
     let user =JSON.stringify({
@@ -55,11 +56,13 @@ export class Tab2Page {
     return IsInstructor ? this.checkInstructor(user) : this.checkStudent(user);
   }
 
+
   async loginClick(){    
    //A user object with UserName and password
-    this.IsInRole(this.IsInstructor).then((value) => {
+   this.IsInRole(this.IsInstructor).then((value) => {
       this.storage.set('userDetails',value).then(()=>
       this.router.navigate(['/tabs/tab3']))
     });
+   
   }
 }

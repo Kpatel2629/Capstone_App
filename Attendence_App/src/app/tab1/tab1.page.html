@@ -11,37 +11,58 @@
    <ion-list inset>
 
     <img src="../../assets/logo.png">
+
     
-    <ion-input  [(ngModel)]="logindata.firstName" type = "text" style="font-size: 20px;" placeholder="First Name"></ion-input >
+    <div class="segment">
+      <h1 style="color: darkgreen;">Sign up</h1>
+    </div>
 
-    <ion-input  [(ngModel)]="logindata.lastName" type = "text" style="font-size: 20px;"placeholder="Last Name"></ion-input>
-   
-    <ion-input  [(ngModel)]="logindata.userName" type = "text" placeholder="Username" style="font-size: 20px;color: black;" value=""></ion-input>
-
-    <ion-input  [(ngModel)]="logindata.email" type = "text" placeholder="email" style="font-size: 20px;"  value = "" ></ion-input>
-     
-    <ion-input  [(ngModel)]="logindata.password" type = "password" placeholder="Password"  style="font-size: 20px;" value=""></ion-input>
-
-    <ion-input  [(ngModel)]="logindata.C_password" type = "password" placeholder="Confirm Password"  style="font-size: 20px;" value=""></ion-input>
+  <div class="form">
+    <label >
+      <input type="text" style="color: black;"  [(ngModel)]="logindata.firstName"  placeholder="First Name">
+    </label>
+    <label>
+      <input type="text" style="color: black;"   [(ngModel)]="logindata.lastName" placeholder="Last Name">
+    </label>
+    <label>
+      <input type="text" style="color: black;"   [(ngModel)]="logindata.userName"  placeholder="Username">
+    </label>
+    <label>
+      <input type="text" style="color: black;"  [(ngModel)]="logindata.email"   placeholder="email">
+    </label>
+    <label>
+      <input type="password" style="color: black;"  [(ngModel)]="logindata.password" placeholder="Password">
+    </label>
+    <label>
+      <input type="password" style="color: black;" [(ngModel)]="logindata.C_password" placeholder="Confirm Password">
+    </label>
+ 
 
     <ion-item style="right: 9px;">
       <ion-label style="font-size: 20px;">SignUp as Instructor</ion-label>
       <ion-checkbox style="font-size: 20px;" color="light"  [(ngModel)]="IsInstructor"></ion-checkbox>
     </ion-item>
-  
-</ion-list>
+
+   
 
 <ion-input readonly="" style="font-size: 20px; color: red;" [(ngModel)]="errorMessege"  ></ion-input>
 
 <ion-row style="margin-bottom: 15px;margin-top: -30px;">
 
-  <ion-col col-12 col-sm ><ion-button  (click)="registerClick()" style="margin-left: 10px;margin-bottom: 20px;" shape="round" size="30px" color="light" >
-    <ion-icon slot="icon-only" name="person" ></ion-icon>Register</ion-button></ion-col>
+  <ion-col col-12 col-sm >
 
-  <ion-col col-12 col-sm><ion-button  (click)="ToLoginClick()" shape="round" size="30px" color="light" >
-    <ion-icon slot="end" name="arrow-round-forward" ></ion-icon>To Login </ion-button>
+    <button class="red" (click)="registerClick()" style=" margin-top: 10px;"  type="button">
+       Register</button>
+  </ion-col>
+
+  <ion-col col-12 col-sm>
+    <button class="red" (click)="ToLoginClick()" style=" margin-top: 10px;"  type="button">
+      To Login</button>
     </ion-col>
 
 </ion-row>
+</div>
+</ion-list>
+
   
 </ion-content>

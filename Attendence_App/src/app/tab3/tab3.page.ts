@@ -11,21 +11,19 @@ import { from } from 'rxjs';
   styleUrls: ['tab3.page.scss']
 })
 
-
 export class Tab3Page {
 
-  
 public user;
 public errorMessege:string;
 public className:string;
 public instructor:Number;
 public firstName:string;
 
+
 constructor(public router:Router,public http:Http,public storage:Storage ) {}
 
   ngOnInit() {
-   //  this.user = this.storage.get('userDetails');
-     
+   //  this.user = this.storage.get('userDetails');     
      this.storage.get('userDetails').then((parameter)=>{
       this.user = parameter;
       this.instructor = parameter.instructor_id;
@@ -42,6 +40,17 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
         console.log(err);
       });
      });  
+   }
+
+    //Accept a instructor id as parameter
+  public retrieveClass(instructorId){
+    return new Promise<any>((resolve,reject) => {
+      this.http.get('http://localhost:3000'+'/getClasses/'+instructorId+'').subscribe(data => {
+      resolve(data.json().data)
+      }, err => {
+        console.log(err);
+      });
+    });
   }
 
    KClick(){
@@ -49,11 +58,14 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
    }
 
    addClassClick(){
+    //a classObject 
     let classObject = {
       className : this.className,
       Instructor: this.instructor
     }
-    this.addClass(classObject);
-    console.log(classObject.Instructor)
+  //  this.addClass(classObject);
+   this.retrieveClass(classObject.Instructor).then((value) => {
+    console.log(value)
+  });
    }
 }
