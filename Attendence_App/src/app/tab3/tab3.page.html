@@ -6,26 +6,37 @@
 
 <ion-content>
   
-      <ion-list>
-        <ion-item>
-          <ion-label>Welcome on class </ion-label>
-          <ion-input [(ngModel)]="firstName" color="success" readonly style="font-size: 20px;" ></ion-input>
-        </ion-item>
+     
+        <div class="segment">
+          <ion-label style="font-size: 30px;">Welcome to class </ion-label>
+          <ion-input [(ngModel)]="firstName" readonly  style="font-size: 30px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+          'Trebuchet MS', sans-serif;color: green" ></ion-input>
+        </div>
+  
 
-        <ion-item>
-          <ion-input  [(ngModel)]="className" type = "text" style="font-size: 20px;" placeholder="Name of Class"></ion-input >
-        </ion-item>
+    <div class="form">
+     
+      <label>
+        <input type="text"  style="color: black;" [(ngModel)]="className" placeholder="enter class Name"/>
+      </label>
+ 
+     <ion-row>
+       <ion-col>
+        <button class="red" (click)="addClassClick()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only" name="add">
+        </ion-icon> Add new</button>
+      </ion-col>
+      <ion-col>
+        <button class="red" (click)="deleteClassClick()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only" name="add">
+        </ion-icon> Delete</button>
+      </ion-col>
 
-        <ion-button  (click)="addClassClick()" shape="round" style="margin-top: 10px;"  size="30px" color="light" >
-          <ion-icon slot="icon-only" name="add"></ion-icon>Add new Class</ion-button>
-      
-        <ion-button  shape="round" style="margin-top: 10px;"  size="30px" color="light" >
-          <ion-icon slot="icon-only" name="person-add"></ion-icon>Register</ion-button>
-       </ion-list>
-
-
-
-
-
+    </ion-row>
+  
+  </div>
+       
+      <div class="segment" id="myclass" *ngFor="let div of data">
+        <ion-label  style="font-size: 30px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+         'Trebuchet MS', sans-serif;color: green"  (click)="classSelectClick($event)"> {{div}} </ion-label>
+       </div>
 
 </ion-content>

@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import {Storage} from '@ionic/storage';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-
-
 import { from } from 'rxjs';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -18,6 +17,7 @@ public errorMessege:string;
 public className:string;
 public instructor:Number;
 public firstName:string;
+data:any = [];
 
 
 constructor(public router:Router,public http:Http,public storage:Storage ) {}
@@ -28,7 +28,8 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
       this.user = parameter;
       this.instructor = parameter.instructor_id;
       this.firstName = parameter.first_name;
-      console.log(this.user)
+      console.log(this.user);
+      this.addtoList(this.instructor);
     })
    }
 
@@ -53,19 +54,51 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
     });
   }
 
-   KClick(){
-     console.log(this.user.username);
+  deleteClass(className){
+    return new Promise<any>((resolve,reject) => {
+      this.http.delete('http://localhost:3000'+'/class/'+className+'').subscribe(data => {
+      resolve(data.json().data)
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+  
+  deleteClassClick(){
+    this.deleteClass(this.className).then((value)=>{
+      console.log(value);
+    })
+  }
+
+   //A function that load array of classes
+   showClassClick(){
+     this.retrieveClass(this.instructor).then((value)=>{
+       console.log(value);
+     })
    }
 
+   classSelectClick(event : any){
+     console.log("Yes i am your "+event.target.innerText+"  component");
+   }
+
+  //a function that load data to listview
+  addtoList(instructorid){
+    this.retrieveClass(instructorid).then((value) => {
+      for(var i = 0; i < value.length;i++){
+        var classes = value[i].class_name;
+        this.data.push(classes);
+      }
+    })
+  }
+  
    addClassClick(){
     //a classObject 
     let classObject = {
       className : this.className,
       Instructor: this.instructor
     }
-  //  this.addClass(classObject);
-   this.retrieveClass(classObject.Instructor).then((value) => {
-    console.log(value)
-  });
+    this.addClass(classObject);
+   
+   this.addtoList(this.instructor);
    }
 }

@@ -1,4 +1,4 @@
-// default route
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -104,6 +104,7 @@ app.post('/Checkinstructor', function (req, res) {
     if (!user) {
         return res.status(400).send({ error:true, message: 'Please provide user' });
     }
+    
     var sql = 'SELECT * FROM instructor WHERE username = ? AND password = ?';
     dbConn.query(sql,[username,password],
      function (error, results) {
@@ -151,6 +152,23 @@ app.post('/class', function (req, res) {
      function (error, results, fields) {
         if (error) throw error;
         return res.send({ error: false, data: results, message: ' A Class has been added.'  });        
+    });
+});
+
+
+//To delete class 
+app.delete('/class/:className', function (req, res) {
+  
+    var className = req.params.className;
+    
+    if (!className) {
+        return res.status(400).send({ error:true, message: 'Please provide class' });
+    }
+
+    dbConn.query("DELETE FROM  class WHERE class_name = ? ", [className],
+     function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: ' A Class has been deleted.'  });        
     });
 });
 

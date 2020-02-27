@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { Observable, from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController } from '@ionic/angular';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 
 @Component({
@@ -21,20 +22,11 @@ export class Tab1Page {
   public IsInstructor:Boolean ;
   
   constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController,
-  public router:Router ) 
+  public router:Router) 
   {
-
+   
   }
-  //get all users
-  getUsers() {
-    return new Promise(resolve => {
-      this.http.get('http://localhost:3000'+'/users/1').subscribe(data => {
-        console.log(data.json().data);
-      }, err => {
-        console.log(err);
-      });
-    });
-  }  
+
 
   //try for firestore
   TryFirestore(data) {
@@ -60,7 +52,7 @@ export class Tab1Page {
   registerStudent(student){
   return new Promise(resolve => {
     this.http.post('http://localhost:3000'+'/student',{users: student}).subscribe(data => {
-      this.errorMessege = JSON.stringify(data.json().message);
+    //  this.errorMessege = JSON.stringify(data.json().message);
     }, err => {
       console.log(err);
     });
@@ -76,6 +68,7 @@ registerInstructor(instructor){
     });
    });  
 }
+
 
   //A value that to be fetched to firestore
   k = { barcode_id : "Value of barcode"};
@@ -103,7 +96,8 @@ registerInstructor(instructor){
     
    //this.presentLoading();
  // this.TryFirestore(this.k);
-  this.IsInRole(this.IsInstructor);
+  this.IsInRole(this.IsInstructor)
+  
   console.log(this.IsInstructor)
   }
 }

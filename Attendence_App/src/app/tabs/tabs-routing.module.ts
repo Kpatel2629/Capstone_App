@@ -38,6 +38,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'barcode-page',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../barcode-page/barcode-page.module').then(m => m.BarcodePagePageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
