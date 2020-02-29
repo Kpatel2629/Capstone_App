@@ -57,7 +57,7 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
   deleteClass(className){
     return new Promise<any>((resolve,reject) => {
       this.http.delete('http://localhost:3000'+'/class/'+className+'').subscribe(data => {
-      resolve(data.json().data)
+      resolve(data.json().message)
       }, err => {
         console.log(err);
       });
@@ -77,8 +77,12 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
      })
    }
 
+
+   //click function that select class element and save it to localstorage 
    classSelectClick(event : any){
-     console.log("Yes i am your "+event.target.innerText+"  component");
+      this.storage.set('className',event.target.innerText).then(()=>
+      this.router.navigate(['/tabs/barcode-page']))
+    
    }
 
   //a function that load data to listview

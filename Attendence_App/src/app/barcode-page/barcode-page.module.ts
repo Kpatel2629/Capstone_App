@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 
 import { BarcodePagePage } from './barcode-page.page';
@@ -13,7 +13,8 @@ import { BarcodePagePage } from './barcode-page.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([{ path: '', component: BarcodePagePage }])
+    RouterModule.forChild([{ path: '', component: BarcodePagePage }]),
+    NgxQRCodeModule
   ],
   declarations: [BarcodePagePage]
 })
