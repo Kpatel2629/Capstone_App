@@ -172,6 +172,42 @@ app.delete('/class/:className', function (req, res) {
     });
 });
 
+//to add student to class
+app.post('/addStudentToclass', function (req, res) {
+  
+    let studentObj = req.body.studentObj;
+    var studentEmail = studentObj.studentEmail;
+    var className = studentObj.className
+    var sData;
+    if (!studentObj) {
+        return res.status(400).send({ error:true, message: 'Please provide class' });
+    }
+
+
+     dbConn.query("SELECT * FROM enrolled_student WHERE student_id = (select student_id from student where email = '"+studentEmail+"') AND class_id = (select class_id from class where class_name = '"+className+"')",
+      function (error, results, fields) {
+        
+         if (error) throw error;
+         else{
+
+            if(results.length == 0){
+
+                dbConn.query("INSERT INTO enrolled_student (student_id,class_id,attendence) VALUES ((select student_id from student where email = '"+studentEmail+"') , (select class_id from class where class_name = '"+className+"') , '2')",
+                function(error,results,fields){
+                
+                    if(error) throw error;
+                    return res.send({error:false , data:results , message : 'student has been added to class' });
+                });
+            }
+            else{
+                return res.send({ error: false,data: results, message: 'a user already exists'  });  
+            }
+         }
+           
+     }); 
+
+});
+
 
 //Add a New Instructor to database
 app.post('/instructor', function (req, res) {

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClientModule ,HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { Observable, from } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
@@ -21,20 +20,10 @@ export class Tab1Page {
   public errorMessege:string;
   public IsInstructor:Boolean ;
   
-  constructor(public http:Http,public Store:AngularFirestore,public loadingController: LoadingController,
+  constructor(public http:Http,public loadingController: LoadingController,
   public router:Router) 
   {
    
-  }
-
-
-  //try for firestore
-  TryFirestore(data) {
-    return new Promise<any>((resolve, reject) => {
-        this.Store
-            .collection("Classes/").doc("class_id/").set(data)
-            .then(res => {}, err => reject(err));
-    });
   }
 
 //ionic Loading
@@ -68,7 +57,6 @@ registerInstructor(instructor){
     });
    });  
 }
-
 
   //A value that to be fetched to firestore
   k = { barcode_id : "Value of barcode"};

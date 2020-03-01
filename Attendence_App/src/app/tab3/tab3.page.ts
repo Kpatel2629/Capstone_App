@@ -35,6 +35,7 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
 
    addClass(newClass){
     return new Promise(resolve => {
+      this.data = [];
       this.http.post('http://localhost:3000'+'/class',{classes: newClass}).subscribe(data => {
         this.errorMessege = JSON.stringify(data.json().message);
       }, err => {
@@ -43,9 +44,12 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
      });  
    }
 
+
+ 
     //Accept a instructor id as parameter
   public retrieveClass(instructorId){
     return new Promise<any>((resolve,reject) => {
+      this.data = [];
       this.http.get('http://localhost:3000'+'/getClasses/'+instructorId+'').subscribe(data => {
       resolve(data.json().data)
       }, err => {
@@ -66,7 +70,7 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
   
   deleteClassClick(){
     this.deleteClass(this.className).then((value)=>{
-      console.log(value);
+      this.addtoList(this.instructor);
     })
   }
 

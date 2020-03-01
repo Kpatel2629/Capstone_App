@@ -6,9 +6,10 @@
 
 <ion-content fullscreen class="ion-padding" scroll-y="false">
 
-  
-  <div class="form">
+    <label style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;color: green">Add new student</label>
 
+<div style="margin-top: -20px;" class="form">
     <ion-row>
       <ion-col>
   <label>
@@ -20,11 +21,9 @@
 </ion-col>
 </ion-row>
   
-      <button class="red" (click)="CraeteBarcode()" style=" margin-top: 10px;" type="button">Start Taking Attendence</button>
+      <button class="red" (click)="CraeteBarcode()"  type="button">Start Taking Attendence</button>
     
-
-    
-        <ion-card class="card" style="height: 250px; width: 250px; margin-top: 40px;" *ngIf="createdCode">
+        <ion-card class="card" style="height: 270px; width: 270px; margin-top: 40px;" *ngIf="createdCode">
           <ngx-qrcode [qrc-value]="createdCode">
           </ngx-qrcode>
         </ion-card>      
