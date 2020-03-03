@@ -4,34 +4,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding" scroll-y="false">
+<ion-content fullscreen class="ion-padding" >
 
-    <label style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
-    'Trebuchet MS', sans-serif;color: green">Add new student</label>
+    <label  style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;color: green">Add new student to  <label>{{className}}</label>  
+  </label>
 
 <div style="margin-top: -20px;" class="form">
-    <ion-row>
-      <ion-col>
-  <label>
-    <input type="email"  style="color: black; width: 200px;" [(ngModel)]="student_email" placeholder="Enter email"/>
+    
+  <label >
+    <input type="email"  style="color: black; width: 300px;" [(ngModel)]="student_email" placeholder="Enter email"/>
   </label>
+  <ion-row>
+<ion-col>
+  <button class="yellow" style="width: 100px; margin-top: -10px;" (click)="addStudent()"  type="button"> <ion-icon name="add"></ion-icon></button>
 </ion-col>
 <ion-col>
-  <button class="yellow" style="width: 60px;" (click)="addStudent()"  type="button"> <ion-icon name="add"></ion-icon></button>
+  <button class="yellow" style="width: 100px; margin-top: -10px;" (click)="removeStudent()"  type="button"> <ion-icon name="trash"></ion-icon></button>
 </ion-col>
 </ion-row>
   
-      <button class="red" (click)="CraeteBarcode()"  type="button">Start Taking Attendence</button>
+      <button style="margin-top: 20px;" class="red" (click)="CraeteBarcode()"  type="button">Start Taking Attendence</button>
     
         <ion-card class="card" style="height: 270px; width: 270px; margin-top: 40px;" *ngIf="createdCode">
           <ngx-qrcode [qrc-value]="createdCode">
           </ngx-qrcode>
         </ion-card>      
     </div> 
+
   
-
-
-
- 
-
+  <div  style="font-size: 30px; margin-top: 20pxpx; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+  'Trebuchet MS', sans-serif;color: green"   >ClassList</div>
+  
+  <div class="segmentList"  id="myclass" *ngFor="let div of data">
+    <ion-label  style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+     'Trebuchet MS', sans-serif;color: green"   (click)="classSelectClick($event)"> {{div}} </ion-label>
+   </div>
+  
 </ion-content>

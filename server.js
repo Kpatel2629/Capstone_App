@@ -38,7 +38,7 @@ dbConn.connect();
 // Retrieve all users 
 app.get('/users', function (req, res) {
     dbConn.query('SELECT * FROM student', function (error, results) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'error in getting studunt '+error.stack+' '})
         return res.send( results);
     });
 });
@@ -68,7 +68,7 @@ app.get('/getClasses/:instructorid', function(req,res){
     }
     
     dbConn.query('SELECT * FROM class where instructor_id=?', instructorid,function (error, results) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'cannot get a class for that instructor '+error.stack+' '})
         return res.send({ error: false, data: results, message: 'users list.' });
     }); 
 });
@@ -87,7 +87,7 @@ app.post('/Checkstudent', function (req, res) {
     var sql = 'SELECT * FROM student WHERE username = ? AND password = ?';
     dbConn.query(sql,[username,password],
      function (error, results) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'Account dosent exist for that username'+error.stack+' '})
         return res.send({ error: false, data: results[0], message: 'Account exists.'});        
     });
 });
@@ -108,7 +108,7 @@ app.post('/Checkinstructor', function (req, res) {
     var sql = 'SELECT * FROM instructor WHERE username = ? AND password = ?';
     dbConn.query(sql,[username,password],
      function (error, results) {
-        if (error) throw error;
+        if (error) return res.send({error:true , message:'can not find account associsted to this username'+error.stack+' '})
         return res.send({ error: false, data: results[0], message: 'Account exists.'});        
     });
 });
@@ -132,7 +132,7 @@ app.post('/student', function (req, res) {
 
     dbConn.query("INSERT INTO student (username,first_name,last_name,email,password) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"','"+password+"') ",
      function (error, results, fields) {
-        if (error) throw error;
+        if (error) return res.send({error:true , message:'error in craeting a new account '+error.stack+' '})
         return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        
     });
 });
@@ -150,7 +150,7 @@ app.post('/class', function (req, res) {
 
     dbConn.query("INSERT INTO class (class_name,instructor_id) VALUES ( '"+className+"','"+instructor+"') ",
      function (error, results, fields) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'sorry, please try with another classname '+error.stack+' '})
         return res.send({ error: false, data: results, message: ' A Class has been added.'  });        
     });
 });
@@ -167,22 +167,55 @@ app.delete('/class/:className', function (req, res) {
 
     dbConn.query("DELETE FROM  class WHERE class_name = ? ", [className],
      function (error, results, fields) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'can not delete class something went wrong , please try again'+error.stack+' '})
         return res.send({ error: false, data: results, message: ' A Class has been deleted.'  });        
     });
 });
+
+//to get all students 
+app.get('/StudentofClass/:className',function(req,res){
+
+    var className = req.params.className;
+    if (!className) {
+        return res.status(400).send({ error:true, message: 'Please provide class' });
+    }
+
+    dbConn.query(" SELECT first_name , last_name , username FROM student where student_id in (select student_id from enrolled_student where class_id = (select class_id from class where class_name = '"+className+"'))",
+    function (error, results, fields) {
+       if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
+       return res.send({ error: false, data: results, message: ' students of class'  });        
+   });
+});
+
+//to remove student from class  
+app.post('/deleteStudentFromClass',function(req,res){
+
+    let studentObj = req.body.studentObj;
+    var studentEmail = studentObj.studentEmail;
+    var className = studentObj.className;
+
+    if (!studentObj) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+
+    dbConn.query("delete from enrolled_student where student_id = (select student_id from student where email ='"+studentEmail+"') and class_id  = (select class_id from class where class_name ='"+className+"')",
+    function (error, results, fields) {
+       if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
+       return res.send({ error: false, data: results, message: 'student removed from '+className+' ' });        
+   });
+});
+
 
 //to add student to class
 app.post('/addStudentToclass', function (req, res) {
   
     let studentObj = req.body.studentObj;
     var studentEmail = studentObj.studentEmail;
-    var className = studentObj.className
-    var sData;
+    var className = studentObj.className;
+
     if (!studentObj) {
         return res.status(400).send({ error:true, message: 'Please provide class' });
     }
-
 
      dbConn.query("SELECT * FROM enrolled_student WHERE student_id = (select student_id from student where email = '"+studentEmail+"') AND class_id = (select class_id from class where class_name = '"+className+"')",
       function (error, results, fields) {
@@ -195,7 +228,7 @@ app.post('/addStudentToclass', function (req, res) {
                 dbConn.query("INSERT INTO enrolled_student (student_id,class_id,attendence) VALUES ((select student_id from student where email = '"+studentEmail+"') , (select class_id from class where class_name = '"+className+"') , '2')",
                 function(error,results,fields){
                 
-                    if(error) throw error;
+                    if(error) return res.send({error:true , message:'error in inserting studunt '+error.stack+' '})
                     return res.send({error:false , data:results , message : 'student has been added to class' });
                 });
             }
@@ -226,7 +259,7 @@ app.post('/instructor', function (req, res) {
 
     dbConn.query("INSERT INTO instructor (username,first_name,last_name,email,password) VALUES ( '"+username+"','"+f_name+"','"+l_name+"' , '"+email+"','"+password+"') ",
      function (error, results, fields) {
-        if (error) throw error;
+        if (error)  return res.send({error:true , message:'can not create account please try with different username or email'+error.stack+' '})
         return res.send({ error: false, data: results, message: 'Account has been created succesfully.'  });        
     });
 });
@@ -246,20 +279,6 @@ app.put('/user', function (req, res) {
         return res.send({ error: false, data: results, message: 'user has been updated successfully.' });
     });
 });
-
-//  Delete user
-app.delete('/user', function (req, res) {
-  
-    let user_id = req.body.user_id;
-  
-    if (!user_id) {
-        return res.status(400).send({ error: true, message: 'Please provide user_id' });
-    }
-    dbConn.query('DELETE FROM users WHERE id = ?', [user_id], function (error, results, fields) {
-        if (error) throw error;
-        return res.send({ error: false, data: results, message: 'User has been updated successfully.' });
-    });
-}); 
  
 // set port
 app.listen(3000, function () {

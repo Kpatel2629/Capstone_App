@@ -33,6 +33,7 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
     })
    }
 
+   //add a new class
    addClass(newClass){
     return new Promise(resolve => {
       this.data = [];
@@ -44,8 +45,6 @@ constructor(public router:Router,public http:Http,public storage:Storage ) {}
      });  
    }
 
-
- 
     //Accept a instructor id as parameter
   public retrieveClass(instructorId){
     return new Promise<any>((resolve,reject) => {

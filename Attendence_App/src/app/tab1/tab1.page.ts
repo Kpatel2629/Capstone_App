@@ -66,7 +66,6 @@ registerInstructor(instructor){
   }
 
   // a function which decide a user is instructor or student and return a promise
-  
   public IsInRole(IsInstructor) {
     //A user Object
     let userObject =JSON.stringify({
