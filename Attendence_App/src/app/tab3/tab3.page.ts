@@ -22,13 +22,12 @@ data:any = [];
 
 constructor(public router:Router,public http:Http,public storage:Storage ) {}
 
-  ngOnInit() {
-   //  this.user = this.storage.get('userDetails');     
+  ngOnInit() {    
      this.storage.get('userDetails').then((parameter)=>{
       this.user = parameter;
       this.instructor = parameter.instructor_id;
       this.firstName = parameter.first_name;
-      console.log(this.user);
+     // console.log(this.user);
       this.addtoList(this.instructor);
     })
    }

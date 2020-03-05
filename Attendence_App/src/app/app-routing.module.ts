@@ -11,9 +11,14 @@ const routes: Routes = [
     loadChildren: () => import('./barcode-page/barcode-page.module').then( m => m.BarcodePagePageModule)
   },
   {
-    path: 'class-list',
-    loadChildren: () => import('./class-list/class-list.module').then( m => m.ClassListPageModule)
-  }
+    path: 'student-barcode',
+    loadChildren: () => import('./student-barcode/student-barcode.module').then( m => m.StudentBarcodePageModule)
+  },
+  {
+    path: 'student-scan',
+    loadChildren: () => import('./student-scan/student-scan.module').then( m => m.StudentScanPageModule)
+  },
+  
 ];
 @NgModule({
   imports: [

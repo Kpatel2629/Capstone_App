@@ -77,7 +77,7 @@ export class BarcodePagePage  {
     }
 
     addStudent(){
-      //Object that will ber posted to server (API)
+      //Object that will be posted to server (API)
       let studentObj = {
         studentEmail : this.student_email ,
         className : this.className
@@ -111,7 +111,7 @@ export class BarcodePagePage  {
       console.log(this.createdCode);
 
      const class_data= {
-        gereted_code : this.createdCode
+        genereted_code : this.createdCode
       }
 
       this.sendqrData_firestore(class_data , this.className)

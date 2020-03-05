@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">      My Attendence</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+
+
+
+        <div class="segment">
+          <ion-label style="font-size: 30px;">Welcome to class </ion-label>
+          <ion-input [(ngModel)]="firstName" readonly  style="font-size: 30px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+          'Trebuchet MS', sans-serif;color: green" ></ion-input>
+         
+        </div>
+        <div  style="font-size: 30px; margin-top: 20pxpx; margin-left: 10px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+  'Trebuchet MS', sans-serif;color: green" >ClassList</div>
+       
+      <div class="segment" style="margin-top: -20px;" id="myclass" *ngFor="let div of data">
+        <ion-label  style="font-size: 30px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+         'Trebuchet MS', sans-serif;color: green"  (click)="classSelectClick($event)"> {{div}} </ion-label>
+       </div>
+
+</ion-content>

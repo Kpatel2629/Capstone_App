@@ -48,6 +48,26 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'student-barcode',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../student-barcode/student-barcode.module').then(m => m.StudentBarcodePageModule)
+          }
+        ]
+      },
+      {
+        path: 'student-scan',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../student-scan/student-scan.module').then(m => m.StudentScanPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

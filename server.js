@@ -187,6 +187,23 @@ app.get('/StudentofClass/:className',function(req,res){
    });
 });
 
+
+//to get the class of student that student is enrolled in
+app.get('/getClassesofStudent/:student_id',function(req,res){
+    var student_id = req.params.student_id;
+
+    if (!student_id) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+
+    dbConn.query("select class_name from class where class_id in (select class_id from enrolled_student where student_id = '"+student_id+"' )",
+    function (error, results, fields) {
+       if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
+       return res.send({ error: false, data: results, message: 'list of classes that student is enrolled in ' });        
+   });
+
+});
+
 //to remove student from class  
 app.post('/deleteStudentFromClass',function(req,res){
 
@@ -202,6 +219,26 @@ app.post('/deleteStudentFromClass',function(req,res){
     function (error, results, fields) {
        if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
        return res.send({ error: false, data: results, message: 'student removed from '+className+' ' });        
+   });
+});
+
+
+//to get attendence data from database according class and student
+
+app.post('/attendenceOfStudent',function(req,res){
+
+    let studentObj = req.body.studentObj;
+    var studentId = studentObj.studentId;
+    var className = studentObj.className;
+
+    if (!studentObj) {
+        return res.status(400).send({ error:true, message: 'Please provide user' });
+    }
+
+    dbConn.query("select attendence from enrolled_student where student_id = '"+studentId+"' and class_id  = (select class_id from class where class_name ='"+className+"')",
+    function (error, results, fields) {
+       if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
+       return res.send({ error: false, data: results[0], message: 'student attendence for '+className+' ' });        
    });
 });
 

@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">      My Attendence</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding" >
+  <div class="form">
+    <label readonly  style="font-size: 30px; margin-top: 20pxpx; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;color: green" >{{className}}</label>
+  </div>
+
+  <button class="red" (click)="getdata()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only">
+  </ion-icon> get attendence</button>
+</ion-content>

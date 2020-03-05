@@ -59,10 +59,17 @@ export class Tab2Page {
 
   async loginClick(){    
    //A user object with UserName and password
+   if(this.IsInstructor){
    this.IsInRole(this.IsInstructor).then((value) => {
       this.storage.set('userDetails',value).then(()=>
       this.router.navigate(['/tabs/tab3']))
     });
+  }else{
+    this.IsInRole(this.IsInstructor).then((value) => {
+      this.storage.set('studentDetails',value).then(()=>
+      this.router.navigate(['/tabs/student-barcode']))
+    });
+  }
    
   }
 }

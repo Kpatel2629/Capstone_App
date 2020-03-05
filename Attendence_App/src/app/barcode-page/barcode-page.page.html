@@ -25,7 +25,7 @@
 </ion-row>
   
       <button style="margin-top: 20px;" class="red" (click)="CraeteBarcode()"  type="button">Start Taking Attendence</button>
-    
+
         <ion-card class="card" style="height: 270px; width: 270px; margin-top: 40px;" *ngIf="createdCode">
           <ngx-qrcode [qrc-value]="createdCode">
           </ngx-qrcode>
@@ -34,11 +34,17 @@
 
   
   <div  style="font-size: 30px; margin-top: 20pxpx; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
-  'Trebuchet MS', sans-serif;color: green"   >ClassList</div>
+  'Trebuchet MS', sans-serif;color: green" >ClassList</div>
   
   <div class="segmentList"  id="myclass" *ngFor="let div of data">
+    <ion-row>
+      <ion-col>
     <ion-label  style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
-     'Trebuchet MS', sans-serif;color: green"   (click)="classSelectClick($event)"> {{div}} </ion-label>
-   </div>
+     'Trebuchet MS', sans-serif;color: green"> {{div}} 
+     </ion-label>
+      </ion-col>
+      
+    </ion-row>
+    </div>
   
 </ion-content>
