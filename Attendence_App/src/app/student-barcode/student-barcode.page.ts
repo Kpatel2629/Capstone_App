@@ -43,6 +43,7 @@ export class StudentBarcodePage{
     });
   }
 
+   
   //to add class in listview
   addtoList(studentid){
     this.retrieveStudentofClass(studentid).then((value) => {

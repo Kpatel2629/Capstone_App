@@ -4,6 +4,8 @@ import { from } from 'rxjs';
 import { Http } from '@angular/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { get } from 'http';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-student-scan',
@@ -17,8 +19,10 @@ export class StudentScanPage  {
   public className:string;
   public student:any;
   public attendence:string;
-  public scannedData:string;
-  public barocdeData:any;
+  public scannedData:number;
+  public barocdeData:number = 0 ;
+  public messege:string;
+  public isalreadyScanned:boolean;
 
    constructor(public storage:Storage, public http:Http,
     public Store:AngularFirestore, public BarcodeScan : BarcodeScanner)
@@ -48,9 +52,25 @@ getAttendenceOfStudent(studentObj){
    });  
 }
 
+//Do the attendece of student ,  increament the value of by 1 in database 
+DoAttendence(studentObj){
+  return new Promise(reject => {
+    this.http.post('http://localhost:3000'+'/DoAttendence',{studentObj: studentObj}).subscribe(data => {
+
+     this.messege = data.json().data;
+
+     this.Store
+     .collection("Classes/").doc( this.className+ "/").set({students_attended: [this.student], }, { merge: true },)
+     .then(res => {console.log(res)}, err => reject(err));
+
+    }, err => {
+      console.log(err);
+    });
+   })
+}
+
    //get the data from google firestore
    getqrData_firestore(className) {
-
     return new Promise<any>( () => {
 
        let codeRef = this.Store.collection("Classes/").doc( className);
@@ -63,23 +83,58 @@ getAttendenceOfStudent(studentObj){
               }
               else
               {
-                this.barocdeData =  doc.data().gereted_code
+                this.barocdeData = Number.parseInt(doc.data().genereted_code);
               }
             })
        });
   }
 
+  //to prevent the students who already scanned ( to prevent dupliacate writes to database)
+  CheckAlreadyScanned(){
+    return new Promise<any>( () => {
+
+      let codeRef = this.Store.collection("Classes/").doc( this.className );
+
+           codeRef.get().subscribe(doc =>{
+
+             if(!doc.exists)
+             {
+               console.log('no such document')
+             }
+             else
+             {
+               //find the student number in array if found returns true
+              const ifthereStudent = doc.data().students_attended.find(element => element == this.student);
+              ifthereStudent == this.student ? this.isalreadyScanned = false: this.isalreadyScanned = true;
+              console.log(this.isalreadyScanned)
+
+             }
+           })
+      });
+  }
+
+  //Check the code , which comes from firestore , if match it will call DoAttendence function
   checkCode(){ 
-   return this.barocdeData == this.scannedData ? console.log("matched") : console.log("ahhmrhh dosent matched");
+
+    let studentObj = {
+      studentId : this.student,
+       className : this.className
+     }
+
+     this.CheckAlreadyScanned()
+      return this.barocdeData == this.scannedData && this.isalreadyScanned ? this.DoAttendence(studentObj) : console.log("already scanned or dosent matched");
   }
 
 //scan the code and saves the value
 scanCode(){
-    // this.BarcodeScan.scan().then(barcodeData => {
-    //   this.scannedData = barcodeData.text;
-    // })
-this.getqrData_firestore(this.className);
+
+//     this.BarcodeScan.scan().then(barcodeData => {
+//       this.scannedData = barcodeData.text;
+//     })
+
+this.getqrData_firestore(this.className)
 this.checkCode();    
+
 }
 
 getdata(){
@@ -91,5 +146,6 @@ getdata(){
  this.getAttendenceOfStudent(studentObj).then(() =>{
     console.log(this.attendence)
  });
+
 }
 }

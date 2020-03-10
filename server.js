@@ -287,18 +287,20 @@ app.post('/instructor', function (req, res) {
 });
  
 //  Update user with id
-app.put('/user', function (req, res) {
+app.post('/DoAttendence', function (req, res) {
   
-    let user_id = req.body.user_id;
-    let user = req.body.user;
+    let studentObj = req.body.studentObj;
+    var studentId = studentObj.studentId;
+    var className = studentObj.className;
   
-    if (!user_id || !user) {
+    if (!studentObj) {
         return res.status(400).send({ error: user, message: 'Please provide user and user_id' });
     }
   
-    dbConn.query("UPDATE users SET user = ? WHERE id = ?", [user, user_id], function (error, results) {
+    dbConn.query("UPDATE enrolled_student SET attendence = attendence + 1  where student_id = '"+studentId+"' and class_id  = (select class_id from class where class_name ='"+className+"')", function (error, results) {
+        
         if (error) throw error;
-        return res.send({ error: false, data: results, message: 'user has been updated successfully.' });
+        return res.send({ error: false, data: results, message: 'attendence has been done successfully.' });
     });
 });
  

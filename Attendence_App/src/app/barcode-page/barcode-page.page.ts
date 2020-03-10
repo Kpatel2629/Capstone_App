@@ -111,7 +111,8 @@ export class BarcodePagePage  {
       console.log(this.createdCode);
 
      const class_data= {
-        genereted_code : this.createdCode
+        genereted_code : this.createdCode,
+        students_attended:[]
       }
 
       this.sendqrData_firestore(class_data , this.className)
