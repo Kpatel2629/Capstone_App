@@ -8,8 +8,28 @@
   <div class="form">
     <label readonly  style="font-size: 30px; margin-top: 20pxpx; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
     'Trebuchet MS', sans-serif;color: green" >{{className}}</label>
+
+<label >
+  <input type="text" style="color: black;"  [(ngModel)]=" scannedData"  placeholder="enter barcode data">
+</label>
   </div>
 
-  <button class="red" (click)="getdata()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only">
-  </ion-icon> get attendence</button>
+  <ion-row>
+    <ion-col>
+      <button class="red" (click)="getdata()" style=" margin-top: 10px;" type="button"> get attendence</button>
+    </ion-col>
+    <ion-col>
+      <button class="red" (click)="scanCode()" style=" margin-top: 10px;" type="button">Scan code</button>
+    </ion-col>
+  </ion-row>
+
+  
+
+  <div class="segment">
+    <label style="margin-top: 25px; font-size: 25px;margin-left: 0px;">Your have attended  </label>
+    <label readonly  style="font-size: 100px; margin-top: 20px;margin-left: 0px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;color: green" >{{attendence}}</label>
+    <label style="margin-top: 25px; font-size: 25px;margin-left: 0px">classes in {{className}}  </label>
+  </div>
+
 </ion-content>

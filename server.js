@@ -43,21 +43,6 @@ app.get('/users', function (req, res) {
     });
 });
   
-// Retrieve user with id 
-/* app.get('/students/:userName', function (req, res) {
-  
-    let UserName = req.params.userName;
-    
-    if (!UserName) {
-        return res.status(400).send({ error: true, message: 'Please provide user_id' });
-    }
-  
-    dbConn.query('SELECT * FROM student where username=?', UserName, function (error, results) {
-        if (error) throw error;
-        return res.send({ error: false, data: results[0], message: 'users list.' });
-    }); 
-}); */
-
 //Get the all classes assigned to specific Instructor
 app.get('/getClasses/:instructorid', function(req,res){
     
@@ -269,7 +254,7 @@ app.post('/addStudentToclass', function (req, res) {
                     return res.send({error:false , data:results , message : 'student has been added to class' });
                 });
             }
-            else{
+            else {
                 return res.send({ error: false,data: results, message: 'a user already exists'  });  
             }
          }

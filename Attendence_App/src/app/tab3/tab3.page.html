@@ -15,19 +15,20 @@
 
     <div class="form">
      
-      <label>
-        <input type="text"  style="color: black;" [(ngModel)]="className" placeholder="enter class Name"/>
-      </label>
- 
-     <ion-row>
-       <ion-col>
-        <button class="red" (click)="addClassClick()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only" name="add">
-        </ion-icon> Add new</button>
-      </ion-col>
+      <ion-row>
       <ion-col>
+      <label>
+        <input type="text"  style="color: black; width: 180px;" [(ngModel)]="className" placeholder="enter class Name"/>
+      </label>
+      </ion-col>
+       <ion-col>
+        <button class="red" (click)="addClassClick()" style="color: black; width: 60px;">  <ion-icon slot="icon-only" name="add">
+        </ion-icon></button>
+      </ion-col>
+      <!-- <ion-col>
         <button class="red" (click)="deleteClassClick()" style=" margin-top: 10px;" type="button">  <ion-icon slot="icon-only" name="add">
         </ion-icon> Delete</button>
-      </ion-col>
+      </ion-col> -->
 
     </ion-row>
   

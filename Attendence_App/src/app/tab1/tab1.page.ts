@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 import { Observable, from } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -20,7 +20,7 @@ export class Tab1Page {
   public errorMessege:string;
   public IsInstructor:Boolean ;
   
-  constructor(public http:Http,public loadingController: LoadingController,
+  constructor(public http:Http,public loadingController: LoadingController,public BarcodeScan:BarcodeScanner,
   public router:Router) 
   {
    
@@ -58,9 +58,6 @@ registerInstructor(instructor){
    });  
 }
 
-  //A value that to be fetched to firestore
-  k = { barcode_id : "Value of barcode"};
-
   async ToLoginClick(){
     this.router.navigate(['/tabs/tab2'])
   }
@@ -75,16 +72,15 @@ registerInstructor(instructor){
       email:this.logindata.email,
       password: this.logindata.password,
     });
-
+    //returns promise according to the student or instructor
     return IsInstructor ? this.registerInstructor(userObject) : this.registerStudent(userObject);
   }
     
+  //a click event that call IsInRole function And add to it to database
   async registerClick(){
     
-   //this.presentLoading();
- // this.TryFirestore(this.k);
   this.IsInRole(this.IsInstructor)
-  
-  console.log(this.IsInstructor)
+
+
   }
 }

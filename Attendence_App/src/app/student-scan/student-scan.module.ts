@@ -10,7 +10,9 @@ import { StudentScanPage } from './student-scan.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([{ path: '', component: StudentScanPage }])
+    
+    RouterModule.forChild([{ path: '', component: StudentScanPage} ]
+)
   ],
   declarations: [StudentScanPage]
 })
