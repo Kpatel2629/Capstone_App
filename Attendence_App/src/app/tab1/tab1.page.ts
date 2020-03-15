@@ -6,6 +6,8 @@ import { Observable, from } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import * as validator from '../../../../Attendence_App/validation.js'
+
 
 @Component({
   selector: 'app-tab1',
@@ -17,14 +19,24 @@ export class Tab1Page {
 
   //Properties
   public logindata:any = {};
-  public errorMessege:string;
+  public errorMessege:string = "";
   public IsInstructor:Boolean ;
   
   constructor(public http:Http,public loadingController: LoadingController,public BarcodeScan:BarcodeScanner,
   public router:Router) 
   {
-   
+  
   }
+
+  //Validate all fields and return boll
+  ValidateFields(){
+
+      this.errorMessege = "";
+    if(validator.ValidateEmail(this.logindata.email) == false){
+     this.errorMessege += "email address is not in format, please try again  \n";
+    };
+  }
+  
 
 //ionic Loading
   async presentLoading() {
@@ -49,6 +61,7 @@ export class Tab1Page {
   }
 
 registerInstructor(instructor){
+
   return new Promise(resolve => {
     this.http.post('http://localhost:3000'+'/instructor',{users: instructor}).subscribe(data => {
       this.errorMessege = JSON.stringify(data.json().message);
@@ -78,9 +91,7 @@ registerInstructor(instructor){
     
   //a click event that call IsInRole function And add to it to database
   async registerClick(){
-    
-  this.IsInRole(this.IsInstructor)
-
-
+ //  this.IsInRole(this.IsInstructor)
+  this.ValidateFields();
   }
 }

@@ -44,13 +44,13 @@
     </ion-item>
 
    
-
-<ion-input readonly="" style="font-size: 20px; color: red;" [(ngModel)]="errorMessege"  ></ion-input>
+    <div class="segment">
+      <label style="font-size: 15px; color: red;" >{{errorMessege}}</label>
+    </div>
 
 <ion-row style="margin-bottom: 15px;margin-top: -30px;">
 
   <ion-col col-12 col-sm >
-
     <button class="red" (click)="registerClick()" style=" margin-top: 10px;"  type="button">
        Register</button>
   </ion-col>
@@ -58,10 +58,9 @@
   <ion-col col-12 col-sm>
     <button class="red" (click)="ToLoginClick()" style=" margin-top: 10px;"  type="button">
       To Login</button>
-    </ion-col>
+  </ion-col>
 
 </ion-row>
-
 
 </div>
 </ion-list>
