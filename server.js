@@ -97,9 +97,7 @@ app.post('/Checkinstructor', function (req, res) {
         return res.send({ error: false, data: results[0], message: 'Account exists.'});        
     });
 });
- 
-
- 
+  
 // Add a new user  
 app.post('/student', function (req, res) {
   

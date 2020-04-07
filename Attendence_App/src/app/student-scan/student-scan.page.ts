@@ -91,13 +91,12 @@ DoAttendence(studentObj){
   //to prevent the students who already scanned ( to prevent dupliacate writes to database)
   CheckAlreadyScanned(){
 
-    
     let studentObj = {
       studentId : this.student,
-       className : this.className
+      className : this.className
      }
 
-    return new Promise<any>((resolve) => {
+    return new Promise<any>(() => {
 
       let codeRef = this.Store.collection("Classes/").doc( this.className );
 
@@ -112,12 +111,11 @@ DoAttendence(studentObj){
                //find the student number in array if found returns true
               const ifthereStudent = doc.data().students_attended.find(element => element == this.student);
 
-              ifthereStudent != this.student ? this.DoAttendence(studentObj): console.log('already scanned');
+              ifthereStudent != this.student && this.scannedData == this.barocdeData ? this.DoAttendence(studentObj): console.log('already scanned');
              }
            })
       });
   }
-
 
 
 //scan the code and saves the value
@@ -126,18 +124,16 @@ scanCode(){
 //       this.scannedData = barcodeData.text;
 //     })
 this.getqrData_firestore(this.className)
-this.CheckAlreadyScanned();
-   
+  this.CheckAlreadyScanned();
 }
 
 getdata(){
-
  let studentObj = {
   studentId : this.student,
    className : this.className
  }
 
- this.getAttendenceOfStudent(studentObj).then(() =>{
+ this.getAttendenceOfStudent(studentObj).then((parameter) =>{
     console.log(this.attendence)
  });
 }

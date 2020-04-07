@@ -19,7 +19,7 @@ export class Tab1Page {
 
   //Properties
   public logindata:any = {};
-  public errorMessege:string = "";
+  public errorMessege:any;
   public IsInstructor:Boolean ;
   
   constructor(public http:Http,public loadingController: LoadingController,public BarcodeScan:BarcodeScanner,
@@ -29,13 +29,41 @@ export class Tab1Page {
   }
 
   //Validate all fields and return boll
-  ValidateFields(){
+  ValidateFields(){ 
+     let isvalidatedFields = false
+      this.errorMessege = null;
+      if(validator.ValidatePassword(this.logindata.password) != true){
+        this.errorMessege += validator.ValidatePassword(this.logindata.password)
+      }
+      else{
+        isvalidatedFields = true;
+      }
+      if(validator.needPassword(this.logindata.password) != true){
+        this.errorMessege += validator.needPassword(this.logindata.password)
+      }
+      else{
+        isvalidatedFields = true;
+      }
+      if(validator.needEmail(this.logindata.password) != true){
+        this.errorMessege += validator.needEmail(this.logindata.email)
+      }else{
+        isvalidatedFields = true;
+      }
 
-      this.errorMessege = "";
-    if(validator.ValidateEmail(this.logindata.email) == false){
-     this.errorMessege += "email address is not in format, please try again  \n";
-    };
+    if(validator.ValidateEmail(this.logindata.email) !=true ){
+     this.errorMessege += validator.ValidateEmail(this.logindata.email) 
+    }else{
+      isvalidatedFields = true;
+    }
+
+
+    if(isvalidatedFields == true){
+      this.IsInRole(this.IsInstructor)
+    }
+    console.log(this.errorMessege);
   }
+
+  
   
 
 //ionic Loading
