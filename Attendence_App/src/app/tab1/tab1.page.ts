@@ -31,7 +31,7 @@ export class Tab1Page {
   //Validate all fields and return boll
   ValidateFields(){ 
      let isvalidatedFields = false
-      this.errorMessege = null;
+      this.errorMessege = "";
       if(validator.ValidatePassword(this.logindata.password) != true){
         this.errorMessege += validator.ValidatePassword(this.logindata.password)
       }
@@ -44,6 +44,14 @@ export class Tab1Page {
       else{
         isvalidatedFields = true;
       }
+
+      if(validator.validateConfirmPassword(this.logindata.password,this.logindata.C_password)){
+        this.errorMessege += validator.validateConfirmPassword(this.logindata.password,this.logindata.C_password)
+
+      }else{
+        isvalidatedFields = true;
+      }
+
       if(validator.needEmail(this.logindata.password) != true){
         this.errorMessege += validator.needEmail(this.logindata.email)
       }else{
