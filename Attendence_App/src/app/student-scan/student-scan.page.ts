@@ -19,8 +19,8 @@ export class StudentScanPage  {
   public student:any;
   public attendence:string;
   public scannedData:number;
-  public barocdeData:number = 0 ;
   public messege:string;
+  public barcodeData:any = null;
 
    constructor(public storage:Storage, public http:Http,
     public Store:AngularFirestore, public BarcodeScan : BarcodeScanner)
@@ -69,23 +69,14 @@ DoAttendence(studentObj){
 }
 
    //get the data from google firestore
-   getqrData_firestore(className) {
-    return new Promise<any>( () => {
+async getqrData_firestore(className) {
 
-       let codeRef = this.Store.collection("Classes/").doc( className);
+    
 
+        let codeRef = await this.Store.collection("Classes/").doc( className);
             codeRef.get().subscribe(doc =>{
-
-              if(!doc.exists)
-              {
-                console.log('no such document')
-              }
-              else
-              {
-                this.barocdeData = Number.parseInt(doc.data().genereted_code);
-              }
-            })
-       });
+              this.barcodeData = doc.data().genereted_code;
+      })
   }
 
   //to prevent the students who already scanned ( to prevent dupliacate writes to database)
@@ -95,28 +86,19 @@ DoAttendence(studentObj){
       studentId : this.student,
       className : this.className
      }
+     let ifthereStudent;
 
     return new Promise<any>(() => {
+      
+        let codeRef = this.Store.collection("Classes/").doc( this.className );
+        codeRef.get().subscribe(doc =>{      
+            //find the student number in array if found returns true
+          ifthereStudent = doc.data().students_attended.find(element => element == this.student)
+           ifthereStudent !== this.student && this.scannedData == this.barcodeData ? this.DoAttendence(studentObj): console.log('already scanned');
+        })
+   })      
 
-      let codeRef = this.Store.collection("Classes/").doc( this.className );
-
-           codeRef.get().subscribe(doc =>{
-            
-             if(!doc.exists)
-             {
-               console.log('no such document')
-             }
-             else
-             {
-               //find the student number in array if found returns true
-              const ifthereStudent = doc.data().students_attended.find(element => element == this.student);
-
-              ifthereStudent != this.student && this.scannedData == this.barocdeData ? this.DoAttendence(studentObj): console.log('already scanned');
-             }
-           })
-      });
-  }
-
+}
 
 //scan the code and saves the value
 scanCode(){

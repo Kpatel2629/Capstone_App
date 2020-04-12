@@ -16,6 +16,7 @@ export class Tab2Page {
   public userName:string;
   public password:any;
   public IsInstructor:Boolean ;
+  public errorMessege:string;
 
   constructor(public router:Router,public http:Http,public storage:Storage ) {}
 
@@ -61,15 +62,19 @@ export class Tab2Page {
    //A user object with UserName and password
    if(this.IsInstructor){
    this.IsInRole(this.IsInstructor).then((value) => {
-      this.storage.set('userDetails',value).then(()=>
-      this.router.navigate(['/tabs/tab3']))
+      this.storage.set('userDetails',value).then(()=>{
+      if(!value){
+        this.errorMessege = "Please Create an Account or Login with different password";
+      }else{ this.router.navigate(['/tabs/tab3'])}
+     })
     });
   }else{
     this.IsInRole(this.IsInstructor).then((value) => {
-      this.storage.set('studentDetails',value).then(()=>
-      this.router.navigate(['/tabs/student-barcode']))
-    });
-  }
-   
+      this.storage.set('studentDetails',value).then(()=> {   
+       if(!value){
+        this.errorMessege = "Please Create an Account or Login with different password";
+      }else{ this.router.navigate(['/tabs/student-barcode'])}
+     })});
+  }  
   }
 }
