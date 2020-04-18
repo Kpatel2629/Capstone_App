@@ -7,6 +7,7 @@ import { LoadingController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import * as validator from '../../../../Attendence_App/validation.js'
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class Tab1Page {
         isvalidatedFields = true;
       }
 
-      if(validator.validateConfirmPassword(this.logindata.password,this.logindata.C_password)){
+      if(!validator.validateConfirmPassword(this.logindata.password,this.logindata.C_password)){
         this.errorMessege += validator.validateConfirmPassword(this.logindata.password,this.logindata.C_password)
       }else{
         isvalidatedFields = true;
@@ -58,6 +59,10 @@ export class Tab1Page {
         this.errorMessege += validator.needEmail(this.logindata.email)
       }else{
         isvalidatedFields = true;
+      }
+
+      if(this.logindata.password !== this.logindata.C_password){
+        this.errorMessege += "Please make sure thar password and confirm password match \n";
       }
 
     if(validator.ValidateEmail(this.logindata.email) !=true ){

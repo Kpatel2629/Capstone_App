@@ -1,4 +1,42 @@
-<ion-tabs>
 
-
-</ion-tabs>
+    
+<ion-header>
+    <ion-toolbar>          
+      <ion-buttons>
+        <ion-menu-button>
+  
+        </ion-menu-button>
+        <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">      My Attendence</ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+ 
+  <ion-menu type="overlay" content-id="mycontent">
+      <ion-header style="font-size: large;">
+        Settings
+       <ion-toolbar>
+         
+        <ion-list inset>
+             <ion-item>
+                 <ion-label>Dark Mode</ion-label>
+                 <ion-toggle slot="start" name="blackberry"  color="dark" checked = "false"></ion-toggle>
+             </ion-item>
+        </ion-list>
+ 
+    </ion-toolbar>
+ 
+    </ion-header>
+ 
+    </ion-menu>
+       <ion-router-outlet id="mycontent"></ion-router-outlet> 
+    
+       <div class="ion-padding">
+         
+          
+      </div>
+      
+  </ion-content>
+  
+  

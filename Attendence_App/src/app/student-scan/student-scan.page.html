@@ -1,7 +1,5 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;color: green;font-size: xx-large;font-weight: bolder;">      My Attendence</ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content fullscreen class="ion-padding" >
@@ -19,7 +17,7 @@
       <button class="red" (click)="getdata()" style=" margin-top: 10px;" type="button"> get attendence</button>
     </ion-col>
     <ion-col>
-      <button class="red" (click)="scanCode()" style=" margin-top: 10px;" type="button">Scan code</button>
+      <button class="red" (click)="scanCode()" disabled= "{{isDisabled}}" style=" margin-top: 10px;" type="button">Scan code</button>
     </ion-col>
   </ion-row>
 

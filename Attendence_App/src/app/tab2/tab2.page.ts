@@ -58,23 +58,35 @@ export class Tab2Page {
   }
 
 
-  async loginClick(){    
+  async loginClick(){
+    
+    this.errorMessege = "";
+
+    if(this.userName ==null || this.userName == ""){
+      this.errorMessege += "Username can not be empty \n";
+    }
+    else if(this.password == "" || this.password == null){
+      this.errorMessege += "Password can not be empty \n";
+    } else{
+
+      if(this.IsInstructor){
+        this.IsInRole(this.IsInstructor).then((value) => {
+           this.storage.set('userDetails',value).then(()=>{
+           if(!value){
+             this.errorMessege += "Please Create an Account or Login with different password";
+           }else{ this.router.navigate(['/tabs/tab3'])}
+          })
+         });
+       }else{
+         this.IsInRole(this.IsInstructor).then((value) => {
+           this.storage.set('studentDetails',value).then(()=> {   
+            if(!value){
+             this.errorMessege += "Please Create an Account or Login with different password";
+           }else{ this.router.navigate(['/tabs/student-barcode'])}
+          })});
+       }  
+    }
    //A user object with UserName and password
-   if(this.IsInstructor){
-   this.IsInRole(this.IsInstructor).then((value) => {
-      this.storage.set('userDetails',value).then(()=>{
-      if(!value){
-        this.errorMessege = "Please Create an Account or Login with different password";
-      }else{ this.router.navigate(['/tabs/tab3'])}
-     })
-    });
-  }else{
-    this.IsInRole(this.IsInstructor).then((value) => {
-      this.storage.set('studentDetails',value).then(()=> {   
-       if(!value){
-        this.errorMessege = "Please Create an Account or Login with different password";
-      }else{ this.router.navigate(['/tabs/student-barcode'])}
-     })});
-  }  
+  
   }
 }
