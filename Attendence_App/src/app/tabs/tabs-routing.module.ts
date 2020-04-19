@@ -48,6 +48,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'student-attendence',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../student-attendence/student-attendence.module').then(m => m.StudentAttendencePageModule)
+          }
+        ]
+      },
+      {
         path: 'student-barcode',
         children: [
           {

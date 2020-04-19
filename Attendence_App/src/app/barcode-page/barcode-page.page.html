@@ -37,8 +37,8 @@
   <div class="segmentList"  id="myclass" *ngFor="let div of data">
     <ion-row>
       <ion-col>
-    <ion-label  style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
-     'Trebuchet MS', sans-serif;color: green"> {{div}} 
+    <ion-label id = {{div.studentId}} (click)="studentSelectClick($event)" style="font-size: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri,
+     'Trebuchet MS', sans-serif;color: green"> {{div.name}} 
      </ion-label>
       </ion-col>
       

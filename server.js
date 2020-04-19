@@ -162,12 +162,14 @@ app.get('/StudentofClass/:className',function(req,res){
         return res.status(400).send({ error:true, message: 'Please provide class' });
     }
 
-    dbConn.query(" SELECT first_name , last_name , username FROM student where student_id in (select student_id from enrolled_student where class_id = (select class_id from class where class_name = '"+className+"'))",
+    dbConn.query(" SELECT first_name , last_name , student_id, username FROM student where student_id in (select student_id from enrolled_student where class_id = (select class_id from class where class_name = '"+className+"'))",
     function (error, results, fields) {
        if (error)  return res.send({error:true , message:'can not find any students in that class'+error.stack+' '})
        return res.send({ error: false, data: results, message: ' students of class'  });        
    });
 });
+
+
 
 
 //to get the class of student that student is enrolled in

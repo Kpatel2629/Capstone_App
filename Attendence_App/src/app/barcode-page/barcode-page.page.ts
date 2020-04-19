@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Storage} from '@ionic/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-barcode-page',
@@ -17,7 +18,8 @@ export class BarcodePagePage  {
   public createdCode:any = null;
   data:any = [];
 
-  constructor(public http:Http,public Store:AngularFirestore,public storage:Storage) { }
+  constructor(public http:Http,public Store:AngularFirestore,
+    public router:Router,public storage:Storage) { }
 
   ngOnInit() {
     //  this.user = this.storage.get('userDetails');     
@@ -53,7 +55,8 @@ export class BarcodePagePage  {
   addtoList(className){
     this.StudentofClass(className).then((value) => {
       for(var i = 0; i < value.length;i++){
-        var students = value[i].first_name + " " + value[i].last_name;
+        var students = { name : value[i].first_name,
+        studentId: value[i].student_id};
         this.data.push(students);
       }
     })
@@ -105,6 +108,18 @@ export class BarcodePagePage  {
         });
        });  
     }
+
+  studentSelectClick(event : any){
+
+    let currentStudent_info = {
+      name:event.target.innerText,
+      studentId:event.target.id,
+      className:this.className
+    }
+      this.storage.set('current_student_className',currentStudent_info).then(()=>
+      this.router.navigate(['/tabs/student-attendence'])
+     
+    )}
 
     CraeteBarcode(){
       this.createdCode =JSON.stringify(this.getRandom_Barcode(1000000000));

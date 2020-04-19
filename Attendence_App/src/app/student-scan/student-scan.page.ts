@@ -40,6 +40,7 @@ export class StudentScanPage  {
       this.storage.get('studentDetails').then((parameter)=>{
         this.student = parameter.student_id;
      });
+
 }
 
 //get the attendence of student
@@ -119,8 +120,6 @@ getdata(){
    className : this.className
  }
 
- this.getAttendenceOfStudent(studentObj).then((parameter) =>{
-    console.log(this.attendence)
- });
+ this.getAttendenceOfStudent(studentObj)
 }
 }
