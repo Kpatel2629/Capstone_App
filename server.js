@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
 var dbConn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Aa9909817814',
+    password: '',
     database: 'attenc'
 });
   
